@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <style>
+        * {text-align: center;}
+        #board{
+            margin-left:auto;
+            margin-right:auto;
+        }
+        #board tr td{
+            border : 1px solid gray;
+            height: 16px;
+            width : 16px;  
+            background-color : greenyellow;  
+        }
+        #board tr td.clicked {
+            background-color : violet;
+        }
+        #board tr td.mine {
+            background-color :red;
+        }
+    </style>
+</head>
+<body>
+    <h1>지뢰찾기</h1>
+    <table id="board"></table>
+    <button onclick="genGrid()">새로운 게임</button>
+    <script>
+        let grid = document.getElementById('board');
+        genGrid();
+        function genGrid() {
+            grid.innerHTML='';
+            for(let i=0; i < 8; i++) {
+                row = grid.insertRow(i);
+                for (var j=0; j < 8; j++) {
+                    cell = row.insertCell(j);
+                    cell.onclick = function() {
+                        clickBox(this);
+                    }
+                    var mine = document.createAttribute('mine');
+                    mine.value = (Math.random() < 0.3)?'true':'false';
+                    cell.setAttributeNode(mine);
+                }               
+            }
+        }
+
+        function clickBox(cell) {
+            if (cell.getAttribute('mine') == 'true') {
+                cell.className = 'mine';
+                alert('지뢰를 밟았습니다');
+            }
+            else {
+                cell.className = 'clicked';
+            }    
+        }
+    </script>
+</body>
+</html>
